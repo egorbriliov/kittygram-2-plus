@@ -13,6 +13,14 @@ class OwnerOrReadOnly(permissions.BasePermission):
                 or request.user.is_authenticated
             )
 
-    def has_object_permission(self, request, view, obj):
+    def has_object_permission(self, request, view, obj) -> bool:
         """Проверяет, чтобы пользователь был владельцем."""
         return obj.owner == request.user
+
+
+class ReadOnly(permissions.BasePermission):
+    """Разрешает анонимному пользователю выполнять чтение из БД."""
+
+    def has_permission(self, request, view) -> bool:
+        """Проверяет, чтобы был метод запроса."""
+        return request.method in permissions.SAFE_METHODS
