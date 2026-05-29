@@ -6,7 +6,7 @@ from rest_framework import permissions
 class OwnerOrReadOnly(permissions.BasePermission):
     """Класс который разрешает изменение для владелца и просмот для всех."""
 
-    def has_permission(self, request, view):
+    def has_permission(self, request, view) -> bool:
         """Проверяет чтобы пользователь был авторизирован на уровне запроса."""
         return (
                 request.method in permissions.SAFE_METHODS
