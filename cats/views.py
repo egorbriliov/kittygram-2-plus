@@ -2,7 +2,7 @@
 from rest_framework import viewsets
 
 from .models import Achievement, Cat, User
-from .permissions import OwnerOrReadOnly, ReadOnly
+from .permissions import OwnerOrReadOnly
 from .serializers import AchievementSerializer, CatSerializer, UserSerializer
 
 
@@ -12,12 +12,6 @@ class CatViewSet(viewsets.ModelViewSet):
     queryset = Cat.objects.all()
     serializer_class = CatSerializer
     permission_classes = [OwnerOrReadOnly]  # Базовый для всех операций.
-
-    def get_permissions(self):
-        """Возвращает права по виду запроса."""
-        if self.action == 'retrive':
-            return (ReadOnly, )
-        return super().get_permissions()
 
     def perform_create(self, serializer):
         """Метод добавления котиков."""
