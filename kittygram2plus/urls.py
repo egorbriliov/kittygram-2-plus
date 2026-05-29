@@ -1,3 +1,4 @@
+"""Основные пути проекта."""
 from rest_framework import routers
 
 from django.contrib import admin
