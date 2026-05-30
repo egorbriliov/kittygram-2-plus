@@ -1,12 +1,12 @@
 """Отображения для взаимодейтсвия с котиками."""
-from rest_framework import viewsets
+from rest_framework import viewsets, filters
 from rest_framework.throttling import ScopedRateThrottle
 from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import Achievement, Cat, User
 from .permissions import OwnerOrReadOnly
 from .trottling import WorkingHoursRateThrottle
-from .pagination import CatsPagination
+# from .pagination import CatsPagination
 from .serializers import AchievementSerializer, CatSerializer, UserSerializer
 
 
@@ -20,10 +20,10 @@ class CatViewSet(viewsets.ModelViewSet):
     throttle_classes = (WorkingHoursRateThrottle, ScopedRateThrottle)
     trottle_scope = 'low_request'
 
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter)
     pagination_class = None
-
-    filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('color', 'birth_year')
+    search_fields = ('name',)
 
     def perform_create(self, serializer):
         """Метод добавления котиков."""
