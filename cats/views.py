@@ -1,11 +1,11 @@
 """Отображения для взаимодейтсвия с котиками."""
 from rest_framework import viewsets
 from rest_framework.throttling import ScopedRateThrottle
-from rest_framework.pagination import LimitOffsetPagination
 
 from .models import Achievement, Cat, User
 from .permissions import OwnerOrReadOnly
 from .trottling import WorkingHoursRateThrottle
+from .pagination import CatsPagination
 from .serializers import AchievementSerializer, CatSerializer, UserSerializer
 
 
@@ -17,7 +17,7 @@ class CatViewSet(viewsets.ModelViewSet):
     permission_classes = [OwnerOrReadOnly]  # Базовый для всех операций.
     throttle_classes = (WorkingHoursRateThrottle, ScopedRateThrottle)
     trottle_scope = 'low_request'
-    pagination_class = LimitOffsetPagination
+    pagination_class = CatsPagination
 
     def perform_create(self, serializer):
         """Метод добавления котиков."""
