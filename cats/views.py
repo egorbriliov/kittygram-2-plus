@@ -1,5 +1,6 @@
 """Отображения для взаимодейтсвия с котиками."""
 from rest_framework import viewsets, filters
+from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import Achievement, Cat, User
 from .permissions import OwnerOrReadOnly
@@ -14,9 +15,15 @@ class CatViewSet(viewsets.ModelViewSet):
     serializer_class = CatSerializer
     permission_classes = [OwnerOrReadOnly]
 
-    filter_backends = (filters.SearchFilter)
-    search_fields = ('achievements__name', 'owner__username')
+    filter_backends = (
+        DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    )
     pagination_class = None
+    filterset_fields = ('color', 'birth_year')
+    search_fields = ('name',)
+    ordering_fields = ('name', 'birth_year')
 
     def perform_create(self, serializer):
         """Метод добавления котиков."""
