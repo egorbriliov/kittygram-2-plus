@@ -17,7 +17,7 @@ class CatViewSet(viewsets.ModelViewSet):
     permission_classes = [OwnerOrReadOnly]  # Базовый для всех операций.
     throttle_classes = (WorkingHoursRateThrottle, ScopedRateThrottle)
     trottle_scope = 'low_request'
-    pagination_class = PageNumberPagination
+    pagination_class = None
 
     def perform_create(self, serializer):
         """Метод добавления котиков."""
