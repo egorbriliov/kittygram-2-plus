@@ -131,11 +131,14 @@ REST_FRAMEWORK = {
     # Trottling для ограничения количества запросов от одного пользователя.
     'DEFAULT_TROTTLE_CLASSES': [
         'rest_framework.throttling.UserRateThrottle',
+        'rest_framework.throttling.ScopedRateThrottle',
     ],
     'DEFAULT_THROTTLE_RATES': {
         'user': '1000/day',
+        'anon': '1000/day',
+        'low_request': '1/minute',
     },
-    # Права доступа для анонимного пользователя, который может только читать 
+    # Права доступа для анонимного пользователя, который может только читать
     # данные из БД.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',

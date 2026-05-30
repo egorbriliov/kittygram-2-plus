@@ -1,6 +1,5 @@
 """Отображения для взаимодейтсвия с котиками."""
 from rest_framework import viewsets
-from rest_framework.throttling import AnonRateThrottle
 
 from .models import Achievement, Cat, User
 from .permissions import OwnerOrReadOnly
@@ -13,7 +12,7 @@ class CatViewSet(viewsets.ModelViewSet):
     queryset = Cat.objects.all()
     serializer_class = CatSerializer
     permission_classes = [OwnerOrReadOnly]  # Базовый для всех операций.
-    trottle_classes = [AnonRateThrottle]
+    trottle_scope = 'low_request'
 
     def perform_create(self, serializer):
         """Метод добавления котиков."""
