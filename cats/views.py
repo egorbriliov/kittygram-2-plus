@@ -5,7 +5,7 @@ from rest_framework.throttling import ScopedRateThrottle
 
 from .models import Achievement, Cat, User
 from .permissions import OwnerOrReadOnly
-from .trottles import WorkingHoursRateThrottle
+from .trottling import WorkingHoursRateThrottle
 from .serializers import AchievementSerializer, CatSerializer, UserSerializer
 
 
