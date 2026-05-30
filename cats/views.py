@@ -20,10 +20,9 @@ class CatViewSet(viewsets.ModelViewSet):
     throttle_classes = (WorkingHoursRateThrottle, ScopedRateThrottle)
     trottle_scope = 'low_request'
 
-    filter_backends = (DjangoFilterBackend, filters.SearchFilter)
+    filter_backends = (filters.SearchFilter)
+    search_fields = ('achievements__name', 'owner__username')
     pagination_class = None
-    filterset_fields = ('color', 'birth_year')
-    search_fields = ('name',)
 
     def perform_create(self, serializer):
         """Метод добавления котиков."""
